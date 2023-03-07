@@ -12,10 +12,16 @@ class PostView(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, pk):
-        ...
+        post = get_object_or_404(Post, pk=pk)
+        serializer = PostSerializer(post)
+        return Response(serializer.data)
 
     def post(self, request, pk):
-        ...
+        serializer = PostSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def patch(self, request, pk):
         ...
