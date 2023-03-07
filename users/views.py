@@ -5,8 +5,14 @@ from .models import User
 from .serializers import UserSerializer
 
 
-class UserView(generics.ListCreateAPIView):
+class UserView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
