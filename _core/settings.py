@@ -44,7 +44,6 @@ MY_APPS = [
     "friends",
     "posts",
     "users",
-    "comments",
     "requests"
 ]
 
