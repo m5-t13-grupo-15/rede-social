@@ -10,12 +10,15 @@ Django==4.0.7
 django-rest-framework==0.1.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
+drf-spectacular==0.26.0
 exceptiongroup==1.1.0
 executing==1.2.0
+inflection==0.5.1
 iniconfig==1.1.1
 ipdb==0.13.9
 ipython==8.7.0
 jedi==0.18.2
+jsonschema==4.17.3
 matplotlib-inline==0.1.6
 mypy-extensions==1.0.0
 packaging==22.0
@@ -32,11 +35,13 @@ pure-eval==0.2.2
 pycodestyle==2.10.0
 Pygments==2.13.0
 PyJWT==2.6.0
+pyrsistent==0.19.3
 pytest==7.2.0
 pytest-django==4.5.2
 pytest-testdox==3.0.1
 python-dotenv==1.0.0
 pytz==2022.6
+PyYAML==6.0
 simplejwt==2.0.1
 six==1.16.0
 sqlparse==0.4.3
@@ -46,4 +51,5 @@ tomli==2.0.1
 traitlets==5.7.0
 typing==3.7.4.3
 tzdata==2022.7
+uritemplate==4.1.1
 wcwidth==0.2.5
