@@ -1,12 +1,10 @@
 from django.db import models
-from friends.models import FriendList
 import uuid
 
 
 class RequestTypes(models.TextChoices):
     friend = "friend"
     follower = "follower"
-    cancel = "cancel"
 
 
 # Create your models here.

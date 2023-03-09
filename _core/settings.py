@@ -35,8 +35,20 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = "users.User"
 
 # Application definition
+THIRD_PARTY_APPS = [
+    "rest_framework",
+]
 
-INSTALLED_APPS = [
+MY_APPS = [
+    "followers",
+    "friends",
+    "posts",
+    "users",
+    "comments",
+    "requests"
+]
+
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -44,13 +56,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "drf_spectacular",
-    "followers",
-    "friends",
-    "posts",
-    "users",
-    "comments",
-    "requests",
 ]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -61,6 +69,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
 
 ROOT_URLCONF = "_core.urls"
 
@@ -92,11 +101,11 @@ if ENVIRONMENT == "postgresql":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("POSTGRES_DB"),
+            "NAME": os.getenv("POSTGRES_DB_NAME"),
             "USER": os.getenv("POSTGRES_USER"),
             "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-            "HOST": "127.0.0.1",
-            "PORT": 5432,
+            "HOST": os.getenv("POSTGRES_DB_HOST"),
+            "PORT": os.getenv("POSTGRES_PORT"),
         }
     }
 else:

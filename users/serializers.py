@@ -1,13 +1,10 @@
 from rest_framework import serializers
 from .models import User
-from friends.models import FriendList
 
 
 class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data) -> User:
-        user = User.objects.create_user(**validated_data)
-        FriendList.objects.create(owner=user)
-        return user
+        return User.objects.create_user(**validated_data)
 
     class Meta:
         model = User
