@@ -3,7 +3,7 @@ from users.models import User
 
 
 class UserFollowers(models.Model):
-    owner_id = models.OneToOneField(
+    owner = models.OneToOneField(
         User,
         primary_key=True,
         unique=True,
@@ -11,3 +11,15 @@ class UserFollowers(models.Model):
         related_name="followers",
     )
     followers = models.ManyToManyField(User, related_name="following")
+
+    def add_follower(self, user):
+        if not user in self.followers.all():
+            self.followers.add(user)
+            self.save()
+
+    def remove_follower(self, user):
+        if user in self.follower.all():
+            self.followers.remove(user)
+
+    def unfollow(self, user):
+        self.remove_follower(user)
