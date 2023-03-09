@@ -61,5 +61,5 @@ class PostCommentDestroy(generics.DestroyAPIView):
 
     queryset = PostComments.objects.all()
     serializer_class = PostCommentsSerializer
-    lookup_url_kwarg = "post_id"    
+    lookup_url_kwarg = "comment_id"    
 

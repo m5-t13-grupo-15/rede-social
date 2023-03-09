@@ -13,4 +13,6 @@ urlpatterns = [
     #     views.PostUniqueView.as_view({"put": "unlike_post"}),
     # ),
     path("posts/<str:post_id>/comments/", views.PostCommentCreate.as_view()),
+    path("comments/<str:comment_id>/",
+         views.PostCommentDestroy.as_view()),
 ]

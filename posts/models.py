@@ -13,11 +13,11 @@ class Post(models.Model):
         "users.User", related_name="posts_liked"
     )
     
-    comments = models.ManyToManyField(
-        "users.User",
-        through="posts.PostComments",
-        related_name="comments_post",
-    )
+    # comments = models.ManyToManyField(
+    #     "users.User",
+    #     through="posts.PostComments",
+    #     related_name="comments_post",
+    # )
 
 class PostComments(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
