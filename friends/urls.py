@@ -1,19 +1,16 @@
-from django.contrib import admin
 from .views import FriendListView
 from requests.views import (
     BondFriendRequestView,
-    BondFriendRequestDetail,
-    BondFriendRequestGetView,
+    BondRequestDetail,
 )
-from django.urls import path, include
+from django.urls import path
 
 
 urlpatterns = [
     path("friends/", FriendListView.as_view()),
-    path("friends/requests/", BondFriendRequestGetView.as_view()),
-    path("friends/requests/<str:user_id>/", BondFriendRequestView.as_view()),
+    path("friends/new_requests/<str:user_id>/", BondFriendRequestView.as_view()),
     path(
         "friends/requests_res/<str:request_id>/<str:res>/",
-        BondFriendRequestDetail.as_view(),
+        BondRequestDetail.as_view(),
     ),
 ]

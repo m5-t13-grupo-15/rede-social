@@ -1,4 +1,5 @@
 from django.db import models
+from friends.models import FriendList
 import uuid
 
 
