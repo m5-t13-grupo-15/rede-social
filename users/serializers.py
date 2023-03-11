@@ -2,14 +2,14 @@ from rest_framework import serializers
 from friends.models import FriendList
 from followers.models import FollowersList
 from .models import User
-from friends.models import Friends
+from friends.models import FriendList
 
 
 class UserSerializer(serializers.ModelSerializer):
     friends = serializers.SerializerMethodField(read_only=True)
 
     def get_friends(self, obj):
-        return Friends.objects.filter(owner_id=obj)
+        return FriendList.objects.filter(owner=obj)
 
     def create(self, validated_data) -> User:
         user = User.objects.create_user(**validated_data)
