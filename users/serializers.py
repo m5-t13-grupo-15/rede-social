@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from friends.models import FriendList
+from followers.models import FollowersList
 from .models import User
 from friends.models import Friends
 
@@ -10,7 +12,10 @@ class UserSerializer(serializers.ModelSerializer):
         return Friends.objects.filter(owner_id=obj)
 
     def create(self, validated_data) -> User:
-        return User.objects.create_user(**validated_data)
+        user = User.objects.create_user(**validated_data)
+        FriendList.objects.create(owner=user)
+        FollowersList.objects.create(owner=user)
+        return user
 
     class Meta:
         model = User
@@ -21,7 +26,8 @@ class UserSerializer(serializers.ModelSerializer):
             "password",
             "created_at",
             "updated_at",
-            "friends",
+            "first_name",
+            "last_name",
         ]
 
         read_only_fields = [

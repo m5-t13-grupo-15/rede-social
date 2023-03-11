@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Friends
+from .models import FriendList
 
 
 class FriendListSerializer(serializers.ModelSerializer):
@@ -12,5 +12,5 @@ class FriendListSerializer(serializers.ModelSerializer):
         ]
 
     class Meta:
-        model = Friends
+        model = FriendList
         fields = "__all__"

@@ -3,7 +3,7 @@ from .models import BondRequest
 from users.models import User
 
 
-class RequestSerializer(serializers.ModelSerializer):
+class BondRequestSerializer(serializers.ModelSerializer):
     sender = serializers.SerializerMethodField(read_only=True)
     receiver = serializers.SerializerMethodField(read_only=True)
 
