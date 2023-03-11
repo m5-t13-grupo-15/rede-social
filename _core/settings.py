@@ -37,15 +37,10 @@ AUTH_USER_MODEL = "users.User"
 # Application definition
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "drf_spectacular",
 ]
 
-MY_APPS = [
-    "followers",
-    "friends",
-    "posts",
-    "users",
-    "requests"
-]
+MY_APPS = ["followers", "friends", "posts", "users", "bond_requests"]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -54,7 +49,6 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "drf_spectacular",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS

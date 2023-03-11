@@ -7,9 +7,17 @@ from friends.models import FriendList
 
 class UserSerializer(serializers.ModelSerializer):
     friends = serializers.SerializerMethodField(read_only=True)
+    followers = serializers.SerializerMethodField(read_only=True)
 
     def get_friends(self, obj):
-        return FriendList.objects.filter(owner=obj)
+        friends_list = FriendList.objects.get(owner=obj)
+        friends = friends_list.friends.all()
+        return friends
+
+    def get_followers(self, obj):
+        follower_list = FollowersList.objects.get(owner=obj)
+        followers = follower_list.followers.all()
+        return followers
 
     def create(self, validated_data) -> User:
         user = User.objects.create_user(**validated_data)
@@ -28,6 +36,8 @@ class UserSerializer(serializers.ModelSerializer):
             "updated_at",
             "first_name",
             "last_name",
+            "friends",
+            "followers",
         ]
 
         read_only_fields = [

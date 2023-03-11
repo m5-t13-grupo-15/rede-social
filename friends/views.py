@@ -8,6 +8,7 @@ from .models import FriendList
 class FriendListView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = [FriendListSerializer]
 
     def get(self, request: Request) -> Response:
         friend_list = FriendList.objects.get(owner=request.user)

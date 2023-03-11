@@ -9,6 +9,7 @@ from .models import FollowersList
 class FollowerListView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = [BondListSerializer]
 
     def get(self, request: Request) -> Response:
         follower_list = FollowersList.objects.get(owner=request.user)

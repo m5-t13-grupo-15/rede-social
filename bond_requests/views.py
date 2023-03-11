@@ -4,14 +4,56 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import BondRequestSerializer
 from followers.models import FollowersList
 from rest_framework.views import APIView
+from rest_framework import generics
 from .validations import check_if_exists
 from .models import BondRequest
 from users.models import User
 
 
+class BondRequestGetViewTeste(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = [BondRequestSerializer]
+
+    def get_queryset(self):
+        sender = self.request.user
+        return BondRequest.objects.filter(sender=sender)
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer_sent_friend = BondRequestSerializer(
+            [
+                request
+                for request in queryset
+                if request.request_type == "friend"
+                and request.sender == self.request.user
+            ]
+        )
+        serializer_received_friend = BondRequestSerializer(
+            [
+                request
+                for request in queryset
+                if request.request_type == "friend"
+                and request.receiver == self.request.user
+            ]
+        )
+
+        return Response(
+            {
+                {
+                    "friend_requests": {
+                        "sent": serializer_sent_friend.data,
+                        "received": serializer_received_friend.data,
+                    }
+                }
+            }
+        )
+
+
 class BondRequestGetView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = [BondRequestSerializer]
 
     def get(self, request: Request) -> Response:
         requests_sent_friend = BondRequest.objects.filter(
@@ -56,6 +98,7 @@ class BondRequestGetView(APIView):
 class BondFriendRequestView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = [BondRequestSerializer]
 
     def post(self, request: Request, user_id: str) -> Response:
         receiver = User.objects.get(id=user_id)
@@ -87,8 +130,10 @@ class BondFriendRequestView(APIView):
 class BondRequestDetail(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = [BondRequestSerializer]
 
     def patch(self, request: Request, request_id: str, res: str) -> Response:
+        serializer_class = [BondRequestSerializer]
         bond_request = BondRequest.objects.get(id=request_id)
 
         if request.user == bond_request.sender:
@@ -119,9 +164,18 @@ class BondRequestDetail(APIView):
             )
 
 
+# class BondFollowerRequestViewTeste(generics.CreateAPIView):
+#     authentication_classes = [JWTAuthentication]
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = [BondRequestSerializer]
+
+#     def perform_create(self, serializer):
+
+
 class BondFollowerRequestView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = [BondRequestSerializer]
 
     def post(self, request: Request, user_id: str) -> Response:
         receiver = User.objects.get(id=user_id)
