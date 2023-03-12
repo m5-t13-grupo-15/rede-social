@@ -32,9 +32,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/Followers'
           description: ''
   /api/followers/new_request/{user_id}/:
     post:
@@ -51,19 +49,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: {}
-              description: Unspecified request body
+              $ref: '#/components/schemas/BondFollowerRequest'
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              additionalProperties: {}
-              description: Unspecified request body
+              $ref: '#/components/schemas/BondFollowerRequest'
           multipart/form-data:
             schema:
-              type: object
-              additionalProperties: {}
-              description: Unspecified request body
+              $ref: '#/components/schemas/BondFollowerRequest'
       security:
       - jwtAuth: []
       responses:
@@ -71,9 +63,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/BondFollowerRequest'
           description: ''
   /api/followers/request_res/{request_id}/{res}/:
     patch:
@@ -95,19 +85,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: {}
-              description: Unspecified request body
+              $ref: '#/components/schemas/PatchedBondFriendRequest'
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              additionalProperties: {}
-              description: Unspecified request body
+              $ref: '#/components/schemas/PatchedBondFriendRequest'
           multipart/form-data:
             schema:
-              type: object
-              additionalProperties: {}
-              description: Unspecified request body
+              $ref: '#/components/schemas/PatchedBondFriendRequest'
       security:
       - jwtAuth: []
       responses:
@@ -115,9 +99,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/BondFriendRequest'
           description: ''
   /api/friends/:
     get:
@@ -131,9 +113,16 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/FriendList'
+              examples:
+                FriendListRetrieve:
+                  value:
+                    owner: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    friends:
+                    - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                      username: string
+                      email: user@example.com
+                  summary: list friends
           description: ''
   /api/friends/new_requests/{user_id}/:
     get:
@@ -153,9 +142,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/BondFriendRequest'
           description: ''
     post:
       operationId: api_friends_new_requests_create
@@ -171,19 +158,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: {}
-              description: Unspecified request body
+              $ref: '#/components/schemas/BondFriendRequest'
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              additionalProperties: {}
-              description: Unspecified request body
+              $ref: '#/components/schemas/BondFriendRequest'
           multipart/form-data:
             schema:
-              type: object
-              additionalProperties: {}
-              description: Unspecified request body
+              $ref: '#/components/schemas/BondFriendRequest'
       security:
       - jwtAuth: []
       responses:
@@ -191,9 +172,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/BondFriendRequest'
           description: ''
   /api/friends/requests_res/{request_id}/{res}/:
     patch:
@@ -215,19 +194,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: {}
-              description: Unspecified request body
+              $ref: '#/components/schemas/PatchedBondFriendRequest'
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              additionalProperties: {}
-              description: Unspecified request body
+              $ref: '#/components/schemas/PatchedBondFriendRequest'
           multipart/form-data:
             schema:
-              type: object
-              additionalProperties: {}
-              description: Unspecified request body
+              $ref: '#/components/schemas/PatchedBondFriendRequest'
       security:
       - jwtAuth: []
       responses:
@@ -235,9 +208,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/BondFriendRequest'
           description: ''
   /api/login/:
     post:
@@ -482,9 +453,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/BondFriendRequest'
           description: ''
   /api/users/:
     post:
@@ -496,6 +465,26 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
+            examples:
+              FriendListRetrieve:
+                value:
+                  id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  username: 9mm5DLpCOUso2hmclNUlI7n6vxbfIMOEOj5vd_X5u4J5Qmw+xuu1cxSe_NgpYGgbF98KSJKlw9709eiFEINtZ
+                  email: user@example.com
+                  created_at: '2023-03-12T23:19:12.639Z'
+                  updated_at: '2023-03-12T23:19:12.639Z'
+                  first_name: string
+                  last_name: string
+                  friends:
+                  - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    username: string
+                    email: user@example.com
+                  followers:
+                  - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    username: string
+                    email: user@example.com
+                  private: true
+                summary: list friends
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/User'
@@ -513,6 +502,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                FriendListRetrieve:
+                  value:
+                    id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    username: 9mm5DLpCOUso2hmclNUlI7n6vxbfIMOEOj5vd_X5u4J5Qmw+xuu1cxSe_NgpYGgbF98KSJKlw9709eiFEINtZ
+                    email: user@example.com
+                    created_at: '2023-03-12T23:19:12.639Z'
+                    updated_at: '2023-03-12T23:19:12.639Z'
+                    first_name: string
+                    last_name: string
+                    friends:
+                    - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                      username: string
+                      email: user@example.com
+                    followers:
+                    - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                      username: string
+                      email: user@example.com
+                    private: true
+                  summary: list friends
           description: ''
   /api/users/{id}/:
     get:
@@ -534,6 +543,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                FriendListRetrieve:
+                  value:
+                    id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    username: 9mm5DLpCOUso2hmclNUlI7n6vxbfIMOEOj5vd_X5u4J5Qmw+xuu1cxSe_NgpYGgbF98KSJKlw9709eiFEINtZ
+                    email: user@example.com
+                    created_at: '2023-03-12T23:19:12.639Z'
+                    updated_at: '2023-03-12T23:19:12.639Z'
+                    first_name: string
+                    last_name: string
+                    friends:
+                    - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                      username: string
+                      email: user@example.com
+                    followers:
+                    - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                      username: string
+                      email: user@example.com
+                    private: true
+                  summary: list friends
           description: ''
     put:
       operationId: api_users_update
@@ -550,6 +579,26 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
+            examples:
+              FriendListRetrieve:
+                value:
+                  id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  username: 9mm5DLpCOUso2hmclNUlI7n6vxbfIMOEOj5vd_X5u4J5Qmw+xuu1cxSe_NgpYGgbF98KSJKlw9709eiFEINtZ
+                  email: user@example.com
+                  created_at: '2023-03-12T23:19:12.639Z'
+                  updated_at: '2023-03-12T23:19:12.639Z'
+                  first_name: string
+                  last_name: string
+                  friends:
+                  - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    username: string
+                    email: user@example.com
+                  followers:
+                  - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    username: string
+                    email: user@example.com
+                  private: true
+                summary: list friends
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/User'
@@ -565,6 +614,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                FriendListRetrieve:
+                  value:
+                    id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    username: 9mm5DLpCOUso2hmclNUlI7n6vxbfIMOEOj5vd_X5u4J5Qmw+xuu1cxSe_NgpYGgbF98KSJKlw9709eiFEINtZ
+                    email: user@example.com
+                    created_at: '2023-03-12T23:19:12.639Z'
+                    updated_at: '2023-03-12T23:19:12.639Z'
+                    first_name: string
+                    last_name: string
+                    friends:
+                    - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                      username: string
+                      email: user@example.com
+                    followers:
+                    - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                      username: string
+                      email: user@example.com
+                    private: true
+                  summary: list friends
           description: ''
     patch:
       operationId: api_users_partial_update
@@ -581,6 +650,26 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PatchedUser'
+            examples:
+              FriendListRetrieve:
+                value:
+                  id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  username: 9mm5DLpCOUso2hmclNUlI7n6vxbfIMOEOj5vd_X5u4J5Qmw+xuu1cxSe_NgpYGgbF98KSJKlw9709eiFEINtZ
+                  email: user@example.com
+                  created_at: '2023-03-12T23:19:12.639Z'
+                  updated_at: '2023-03-12T23:19:12.639Z'
+                  first_name: string
+                  last_name: string
+                  friends:
+                  - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    username: string
+                    email: user@example.com
+                  followers:
+                  - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    username: string
+                    email: user@example.com
+                  private: true
+                summary: list friends
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedUser'
@@ -595,6 +684,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                FriendListRetrieve:
+                  value:
+                    id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    username: 9mm5DLpCOUso2hmclNUlI7n6vxbfIMOEOj5vd_X5u4J5Qmw+xuu1cxSe_NgpYGgbF98KSJKlw9709eiFEINtZ
+                    email: user@example.com
+                    created_at: '2023-03-12T23:19:12.639Z'
+                    updated_at: '2023-03-12T23:19:12.639Z'
+                    first_name: string
+                    last_name: string
+                    friends:
+                    - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                      username: string
+                      email: user@example.com
+                    followers:
+                    - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                      username: string
+                      email: user@example.com
+                    private: true
+                  summary: list friends
           description: ''
     delete:
       operationId: api_users_destroy
@@ -613,6 +722,108 @@ paths:
           description: No response body
 components:
   schemas:
+    BondFollowerRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        sender:
+          allOf:
+          - $ref: '#/components/schemas/sender_follower'
+          readOnly: true
+        receiver:
+          allOf:
+          - $ref: '#/components/schemas/receiver_follower'
+          readOnly: true
+        request_type:
+          allOf:
+          - $ref: '#/components/schemas/RequestTypeEnum'
+          readOnly: true
+        sent_at:
+          type: string
+          format: date-time
+          readOnly: true
+        aproved:
+          type: boolean
+          readOnly: true
+          nullable: true
+        is_active:
+          type: boolean
+          readOnly: true
+      required:
+      - aproved
+      - id
+      - is_active
+      - receiver
+      - request_type
+      - sender
+      - sent_at
+    BondFriendRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        sender:
+          allOf:
+          - $ref: '#/components/schemas/sender_friend'
+          readOnly: true
+        receiver:
+          allOf:
+          - $ref: '#/components/schemas/receiver_friend'
+          readOnly: true
+        request_type:
+          allOf:
+          - $ref: '#/components/schemas/RequestTypeEnum'
+          readOnly: true
+        sent_at:
+          type: string
+          format: date-time
+          readOnly: true
+        aproved:
+          type: boolean
+          readOnly: true
+          nullable: true
+        is_active:
+          type: boolean
+          readOnly: true
+      required:
+      - aproved
+      - id
+      - is_active
+      - receiver
+      - request_type
+      - sender
+      - sent_at
+    Followers:
+      type: object
+      properties:
+        owner:
+          type: string
+          format: uuid
+        followers:
+          allOf:
+          - $ref: '#/components/schemas/followers'
+          readOnly: true
+      required:
+      - followers
+      - owner
+    FriendList:
+      type: object
+      properties:
+        owner:
+          type: string
+          format: uuid
+        friends:
+          allOf:
+          - $ref: '#/components/schemas/friends'
+          readOnly: true
+      required:
+      - friends
+      - owner
     PaginatedPostList:
       type: object
       properties:
@@ -633,6 +844,36 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Post'
+    PatchedBondFriendRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        sender:
+          allOf:
+          - $ref: '#/components/schemas/sender_friend'
+          readOnly: true
+        receiver:
+          allOf:
+          - $ref: '#/components/schemas/receiver_friend'
+          readOnly: true
+        request_type:
+          allOf:
+          - $ref: '#/components/schemas/RequestTypeEnum'
+          readOnly: true
+        sent_at:
+          type: string
+          format: date-time
+          readOnly: true
+        aproved:
+          type: boolean
+          readOnly: true
+          nullable: true
+        is_active:
+          type: boolean
+          readOnly: true
     PatchedPost:
       type: object
       properties:
@@ -687,8 +928,15 @@ components:
           type: string
           maxLength: 127
         friends:
-          type: string
+          allOf:
+          - $ref: '#/components/schemas/user_friends'
           readOnly: true
+        followers:
+          allOf:
+          - $ref: '#/components/schemas/user_followers'
+          readOnly: true
+        private:
+          type: boolean
     Post:
       type: object
       properties:
@@ -731,6 +979,14 @@ components:
       - commented_at
       - id
       - text
+    RequestTypeEnum:
+      enum:
+      - friend
+      - follower
+      type: string
+      description: |-
+        * `friend` - Friend
+        * `follower` - Follower
     TokenObtainPair:
       type: object
       properties:
@@ -799,17 +1055,145 @@ components:
           type: string
           maxLength: 127
         friends:
-          type: string
+          allOf:
+          - $ref: '#/components/schemas/user_friends'
           readOnly: true
+        followers:
+          allOf:
+          - $ref: '#/components/schemas/user_followers'
+          readOnly: true
+        private:
+          type: boolean
       required:
       - created_at
       - email
       - first_name
+      - followers
       - friends
       - id
       - last_name
       - password
       - updated_at
+      - username
+    followers:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - id
+      - username
+    friends:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - id
+      - username
+    receiver_follower:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        first_name:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - first_name
+      - id
+    receiver_friend:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        first_name:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - first_name
+      - id
+    sender_follower:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        first_name:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - first_name
+      - id
+    sender_friend:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        first_name:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - first_name
+      - id
+    user_followers:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - id
+      - username
+    user_friends:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - id
       - username
   securitySchemes:
     basicAuth:
