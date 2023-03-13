@@ -1,17 +1,88 @@
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.views import APIView, Request, Response, status
 from rest_framework.permissions import IsAuthenticated
-from .serializers import BondRequestSerializer
+from drf_spectacular.utils import extend_schema
+from .serializers import BondFriendRequestSerializer, BondFollowerRequestSerializer
+from django.db.models import Q
 from followers.models import FollowersList
 from rest_framework.views import APIView
+from rest_framework import generics
 from .validations import check_if_exists
 from .models import BondRequest
 from users.models import User
 
 
-class BondRequestGetView(APIView):
+# class BondRequestGetViewTeste(generics.ListAPIView):
+#     authentication_classes = [JWTAuthentication]
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = [BondRequestSerializer]
+
+#     def get_queryset(self):
+#         sender = self.request.user
+#         return BondRequest.objects.filter(Q(sender=sender) | Q(receiver=sender))
+
+#     def list(self, request):
+#         queryset = self.get_queryset()
+
+#         serializer_sent_friend = BondRequestSerializer(
+#             [
+#                 request
+#                 for request in queryset
+#                 if request.request_type == "friend"
+#                 and request.sender == self.request.user
+#             ],
+#             many=True,
+#         )
+#         serializer_received_friend = BondRequestSerializer(
+#             [
+#                 request
+#                 for request in queryset
+#                 if request.request_type == "friend"
+#                 and request.receiver == self.request.user
+#             ],
+#             many=True,
+#         )
+
+#         serializer_sent_follower = BondRequestSerializer(
+#             [
+#                 request
+#                 for request in queryset
+#                 if request.request_type == "follower"
+#                 and request.sender == self.request.user
+#             ],
+#             many=True,
+#         )
+
+#         serializer_received_follower = BondRequestSerializer(
+#             [
+#                 request
+#                 for request in queryset
+#                 if request.request_type == "follower"
+#                 and request.receiver == self.request.user
+#             ],
+#             many=True,
+#         )
+
+#         return Response(
+#             {
+#                 "friend_requests": {
+#                     "sent": serializer_sent_friend.data,
+#                     "received": serializer_received_friend.data,
+#                 },
+#                 "follower_requests": {
+#                     "sent": serializer_sent_follower.data,
+#                     "received": serializer_received_follower.data,
+#                 },
+#             },
+#             status=status.HTTP_200_OK,
+#         )
+
+
+class BondRequestGetView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = BondFriendRequestSerializer
+    queryset = BondRequest
 
     def get(self, request: Request) -> Response:
         requests_sent_friend = BondRequest.objects.filter(
@@ -27,14 +98,16 @@ class BondRequestGetView(APIView):
             receiver=request.user, request_type="follower"
         )
 
-        serializer_sent_friend = BondRequestSerializer(requests_sent_friend, many=True)
-        serializer_received_friend = BondRequestSerializer(
+        serializer_sent_friend = BondFriendRequestSerializer(
+            requests_sent_friend, many=True
+        )
+        serializer_received_friend = BondFriendRequestSerializer(
             requests_received_friend, many=True
         )
-        serializer_sent_follower = BondRequestSerializer(
+        serializer_sent_follower = BondFollowerRequestSerializer(
             requests_sent_follower, many=True
         )
-        serializer_received_follower = BondRequestSerializer(
+        serializer_received_follower = BondFollowerRequestSerializer(
             requests_received_follower, many=True
         )
 
@@ -53,9 +126,10 @@ class BondRequestGetView(APIView):
         )
 
 
-class BondFriendRequestView(APIView):
+class BondFriendRequestView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = BondFriendRequestSerializer
 
     def post(self, request: Request, user_id: str) -> Response:
         receiver = User.objects.get(id=user_id)
@@ -70,7 +144,7 @@ class BondFriendRequestView(APIView):
             sender=sender, receiver=receiver, request_type="friend"
         )
 
-        serializer = BondRequestSerializer(friend_request)
+        serializer = BondFriendRequestSerializer(friend_request)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -84,9 +158,10 @@ class BondFriendRequestView(APIView):
         )
 
 
-class BondRequestDetail(APIView):
+class BondRequestDetail(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = BondFriendRequestSerializer
 
     def patch(self, request: Request, request_id: str, res: str) -> Response:
         bond_request = BondRequest.objects.get(id=request_id)
@@ -119,9 +194,10 @@ class BondRequestDetail(APIView):
             )
 
 
-class BondFollowerRequestView(APIView):
+class BondFollowerRequestView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = BondFollowerRequestSerializer
 
     def post(self, request: Request, user_id: str) -> Response:
         receiver = User.objects.get(id=user_id)
@@ -147,6 +223,6 @@ class BondFollowerRequestView(APIView):
                 sender=sender, receiver=receiver, request_type="follower"
             )
 
-            serializer = BondRequestSerializer(follower_request)
+            serializer = BondFollowerRequestSerializer(follower_request)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)

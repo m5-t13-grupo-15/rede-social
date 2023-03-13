@@ -1,5 +1,5 @@
 from .views import FollowerListView
-from requests.views import BondFollowerRequestView, BondRequestDetail
+from bond_requests.views import BondFollowerRequestView, BondRequestDetail
 from django.urls import path
 
 

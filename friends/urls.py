@@ -1,5 +1,5 @@
 from .views import FriendListView
-from requests.views import (
+from bond_requests.views import (
     BondFriendRequestView,
     BondRequestDetail,
 )
