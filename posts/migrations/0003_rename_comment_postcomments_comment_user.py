@@ -4,15 +4,14 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('posts', '0002_initial'),
+        ("posts", "0002_initial"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='postcomments',
-            old_name='comment',
-            new_name='comment_user',
+            model_name="postcomments",
+            old_name="comment",
+            new_name="comment_user",
         ),
     ]
