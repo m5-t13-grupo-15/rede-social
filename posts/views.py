@@ -50,16 +50,16 @@ class PostCommentCreate(generics.CreateAPIView):
     queryset = PostComments.objects.all()
     serializer_class = PostCommentsSerializer
     lookup_url_kwarg = "post_id"
-    
-    
+
     def perform_create(self, serializer):
         post = get_object_or_404(Post, id=self.kwargs["post_id"])
         serializer.save(comment_user=self.request.user, post=post)
+
+
 class PostCommentDestroy(generics.DestroyAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     queryset = PostComments.objects.all()
     serializer_class = PostCommentsSerializer
-    lookup_url_kwarg = "comment_id"    
-
+    lookup_url_kwarg = "comment_id"
