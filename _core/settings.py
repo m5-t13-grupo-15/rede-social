@@ -115,8 +115,8 @@ if ENVIRONMENT == "postgresql":
         db_from_env = dj_database_url.config(
             default=DATABASE_URL, conn_max_age=500, ssl_require=True
         )
-    DATABASES["default"].update(db_from_env)
-    DEBUG = False
+        DATABASES["default"].update(db_from_env)
+        DEBUG = False
 
     if not DEBUG:
         # Tell Django to copy statics to the `staticfiles` directory
