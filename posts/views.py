@@ -37,7 +37,7 @@ class PostTimeLineView(generics.ListCreateAPIView):
         friends = friends_list.friends.all()
         posts_friends = Post.objects.filter(Q(user__in=friends) | Q(user__in=user_follow))
 
-        return posts_friends
+        return posts_friends[::-1]
 
 
 class PostUniqueView(generics.RetrieveUpdateDestroyAPIView):
