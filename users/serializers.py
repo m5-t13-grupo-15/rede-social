@@ -46,6 +46,8 @@ from friends.serializer import FriendListSerializer
         )
     ]
 )
+
+
 class UserSerializer(serializers.ModelSerializer):
     friends = serializers.SerializerMethodField(read_only=True)
     followers = serializers.SerializerMethodField(read_only=True)
@@ -60,6 +62,7 @@ class UserSerializer(serializers.ModelSerializer):
             },
         )
     )
+
     def get_friends(self, obj):
         friends_list = FriendList.objects.get(owner=obj)
         serializer = FriendListSerializer(friends_list)
@@ -76,6 +79,7 @@ class UserSerializer(serializers.ModelSerializer):
             },
         )
     )
+    
     def get_followers(self, obj):
         follower_list = FollowersList.objects.get(owner=obj)
         serializer = FollowersSerializer(follower_list)

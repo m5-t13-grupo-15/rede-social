@@ -13,7 +13,7 @@ class Post(models.Model):
 
     likes = models.ManyToManyField("users.User", related_name="posts_liked")
     posted_at = models.DateTimeField(auto_now_add=True)
- 
+
 
 class PostComments(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)

@@ -22,7 +22,7 @@ class PostView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-        
+
 
 class PostTimeLineView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
@@ -33,9 +33,11 @@ class PostTimeLineView(generics.ListCreateAPIView):
         user = User.objects.get(id=self.request.user.id)
         print(user)
         user_follow = user.following.all().values_list("owner")
-        friends_list = FriendList.objects.get(owner = self.request.user)
+        friends_list = FriendList.objects.get(owner=self.request.user)
         friends = friends_list.friends.all()
-        posts_friends = Post.objects.filter(Q(user__in=friends) | Q(user__in=user_follow))
+        posts_friends = Post.objects.filter(
+            Q(user__in=friends) | Q(user__in=user_follow)
+        )
 
         return posts_friends[::-1]
 
