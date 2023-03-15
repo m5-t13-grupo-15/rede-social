@@ -124,9 +124,9 @@ paths:
                       email: user@example.com
                   summary: list friends
           description: ''
-  /api/friends/new_requests/{user_id}/:
+  /api/friends/new_request/{user_id}/:
     get:
-      operationId: api_friends_new_requests_retrieve
+      operationId: api_friends_new_request_retrieve
       parameters:
       - in: path
         name: user_id
@@ -145,7 +145,7 @@ paths:
                 $ref: '#/components/schemas/BondFriendRequest'
           description: ''
     post:
-      operationId: api_friends_new_requests_create
+      operationId: api_friends_new_request_create
       parameters:
       - in: path
         name: user_id
@@ -174,9 +174,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/BondFriendRequest'
           description: ''
-  /api/friends/requests_res/{request_id}/{res}/:
+  /api/friends/request_res/{request_id}/{res}/:
     patch:
-      operationId: api_friends_requests_res_partial_update
+      operationId: api_friends_request_res_partial_update
       parameters:
       - in: path
         name: request_id
@@ -454,6 +454,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BondFriendRequest'
+          description: ''
+  /api/timeline/:
+    get:
+      operationId: api_timeline_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPostList'
           description: ''
   /api/users/:
     post:
@@ -892,6 +914,10 @@ components:
           items:
             $ref: '#/components/schemas/PostComments'
           readOnly: true
+        posted_at:
+          type: string
+          format: date-time
+          readOnly: true
     PatchedUser:
       type: object
       properties:
@@ -955,10 +981,15 @@ components:
           items:
             $ref: '#/components/schemas/PostComments'
           readOnly: true
+        posted_at:
+          type: string
+          format: date-time
+          readOnly: true
       required:
       - content
       - id
       - post_comments_user
+      - posted_at
       - public
     PostComments:
       type: object
