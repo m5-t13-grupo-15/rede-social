@@ -2,9 +2,15 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from followers.models import FollowersList
+from friends.models import FriendList
+
+from posts.permissions import IsAccountOrFriend
+from users.models import User
 from .models import Post, PostComments
 from .serializers import PostCommentsSerializer, PostSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from django.db.models import Q
 
 
 class PostView(generics.ListCreateAPIView):
@@ -16,6 +22,24 @@ class PostView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class PostTimeLineView(generics.ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        user = User.objects.get(id=self.request.user.id)
+        print(user)
+        user_follow = user.following.all().values_list("owner")
+        friends_list = FriendList.objects.get(owner=self.request.user)
+        friends = friends_list.friends.all()
+        posts_friends = Post.objects.filter(
+            Q(user__in=friends) | Q(user__in=user_follow)
+        )
+
+        return posts_friends[::-1]
 
 
 class PostUniqueView(generics.RetrieveUpdateDestroyAPIView):
@@ -45,7 +69,7 @@ class PostUniqueView(generics.RetrieveUpdateDestroyAPIView):
 
 class PostCommentCreate(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAccountOrFriend]
 
     queryset = PostComments.objects.all()
     serializer_class = PostCommentsSerializer

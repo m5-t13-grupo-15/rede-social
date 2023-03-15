@@ -12,12 +12,7 @@ class Post(models.Model):
     public = models.BooleanField()
 
     likes = models.ManyToManyField("users.User", related_name="posts_liked")
-
-    # comments = models.ManyToManyField(
-    #     "users.User",
-    #     through="posts.PostComments",
-    #     related_name="comments_post",
-    # )
+    posted_at = models.DateTimeField(auto_now_add=True)
 
 
 class PostComments(models.Model):

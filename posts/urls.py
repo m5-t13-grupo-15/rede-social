@@ -15,4 +15,6 @@ urlpatterns = [
     path("posts/<str:post_id>/comments/", views.PostCommentCreate.as_view()),
     path("comments/<str:comment_id>/",
          views.PostCommentDestroy.as_view()),
+    path("timeline/",
+         views.PostTimeLineView.as_view()),
 ]

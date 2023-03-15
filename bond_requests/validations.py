@@ -9,6 +9,10 @@ def check_if_exists(sender, receiver):
 
     request_exists = BondRequest.objects.filter(sender=sender, receiver=receiver)
     request_reverse_exists = BondRequest.objects.filter(
+    request_exists = BondRequest.objects.filter(
+        sender=sender, receiver=receiver
+    )
+    request_reverse_exists = BondRequest.objects.filter(
         sender=receiver, receiver=sender
     )
 
