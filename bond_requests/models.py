@@ -1,4 +1,5 @@
 from django.db import models
+from followers.models import FollowersList
 from friends.models import FriendList
 import uuid
 
@@ -35,11 +36,11 @@ class BondRequest(models.Model):
             self.save()
 
         elif self.request_type == "follower":
-            receiver_friends = FriendList.objects.get(owner=self.receiver)
-            sender_friends = FriendList.objects.get(owner=self.sender)
+            receiver_friends = FollowersList.objects.get(owner=self.receiver)
+            sender_friends = FollowersList.objects.get(owner=self.sender)
 
-            receiver_friends.add_friend(self.sender)
-            sender_friends.add_friend(self.receiver)
+            receiver_friends.add_follower(self.sender)
+            sender_friends.add_follower(self.receiver)
 
             self.aproved = True
             self.is_active = False

@@ -24,7 +24,7 @@ class PostView(generics.ListCreateAPIView):
         serializer.save(user=self.request.user)
 
 
-class PostTimeLineView(generics.ListCreateAPIView):
+class PostTimeLineView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = PostSerializer
