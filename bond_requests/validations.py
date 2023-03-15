@@ -7,10 +7,8 @@ def check_if_exists(sender, receiver):
     if receiver == sender:
         return Response({"message": "can't send request to yourself"})
 
-    request_exists = BondFriendRequestSerializer.objects.filter(
-        sender=sender, receiver=receiver
-    )
-    request_reverse_exists = BondFriendRequestSerializer.objects.filter(
+    request_exists = BondRequest.objects.filter(sender=sender, receiver=receiver)
+    request_reverse_exists = BondRequest.objects.filter(
         sender=receiver, receiver=sender
     )
 

@@ -109,6 +109,8 @@ if ENVIRONMENT == "postgresql":
         }
     }
 
+    db_from_env = ""
+
     DATABASE_URL = os.getenv("DATABASE_URL")
 
     if DATABASE_URL:
